@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Photo Collector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('https://iili.io/3Kzq4Sa.md.jpg'); /* Background Image */
+            background-size: cover;
+            background-position: center;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+        input[type="file"], input[type="text"] {
+            margin: 10px 0;
+            width: 100%;
+            padding: 8px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #0088cc;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #005f8d;
+        }
+        .info {
+            text-align: center;
+            margin-bottom: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- পেমেন্ট তথ্য -->
+<div class="info">
+    <h2>✍ লেনদেন করুনঃ</h2>
+    <p>✅- 01950178309 (নগদ) পার্সোনাল💥</p>
+    <p>✅- 01716280089 (বিকাশ) এজেন্ট💥</p>
+    <p>❇️ টাকা সেন্ড মানি করে, বিকাশে ক্যাশ আউট করে, যে নাম্বার থেকে টাকা পাঠিয়েছেন তার শেষের ৪ সংখ্যা বলবেন এবং স্ক্রিনশট দিবেন।</p>
+    <p><strong>Admin 👉 Cyber Team Help 👈</strong></p>
+</div>
+
+<!-- ফর্ম -->
+<div class="container">
+    <h2>Payment Method</h2>
+    <form id="photoForm">
+        <label for="fileInput">Upload Screenshot:</label>
+        <input type="file" id="fileInput" name="photo" accept="image/*" required>
+        
+        <label for="captionInput">Enter Last 4 Digits of Sender Number:</label>
+        <input type="text" id="captionInput" name="caption" placeholder="e.g., 1234" required>
+        
+        <button type="submit">Send to SHADOW JOKER </button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('photoForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const fileInput = document.getElementById('fileInput');
+        const captionInput = document.getElementById('captionInput');
+        const file = fileInput.files[0];
+
+        if (!file) {
+            alert('Please select a photo to upload.');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('photo', file);
+        formData.append('chat_id', '6484972504'); // আপনার চ্যাট আইডি
+        formData.append('caption', `Last 4 Digits: ${captionInput.value}`); // ক্যাপশন পাঠানো হবে
+
+        fetch(`https://api.telegram.org/bot7721901503:AAFzD3I8FSxwqBl99NpzH6Sy85HkyC94dio/sendPhoto`, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.ok) {
+                alert('Photo sent successfully!');
+                fileInput.value = '';
+                captionInput.value = '';
+            } else {
+                alert('Error sending photo: ' + data.description);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+    });
+</script>
+
+</body>
+</html>
